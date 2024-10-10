@@ -1,0 +1,174 @@
+.btn-create {
+  background-color: #007bff; /* Màu nền xanh */
+  color: #fff; /* Màu chữ trắng */
+  border: none; /* Không có đường viền */
+  padding: 10px 20px; /* Khoảng cách bên trong */
+  border-radius: 5px; /* Bo góc */
+  font-size: 16px; /* Kích thước chữ */
+  font-weight: bold; /* Chữ đậm */
+  cursor: pointer; /* Đổi con trỏ thành hình bàn tay khi hover */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển đổi */
+  margin-bottom: 20px;
+}
+
+.btn-create:hover {
+  background-color: #0056b3; /* Màu nền khi hover */
+  transform: scale(1.05); /* Phóng to nhẹ khi hover */
+}
+
+/* Style cho Order Management */
+.container {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.table-container {
+  max-height: 1000px; /* Kích thước tối đa của bảng theo chiều cao */
+  overflow-y: auto;  /* Thanh cuộn dọc khi nội dung vượt quá chiều cao */
+  overflow-x: auto;  /* Thanh cuộn ngang khi nội dung vượt quá chiều rộng */
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse; /* Gộp các border của các ô lại với nhau */
+}
+
+.table th, .table td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ddd; /* Border cho các ô */
+}
+
+.table th {
+  background-color: #f4f4f4; /* Màu nền cho các tiêu đề cột */
+}
+
+/* Style cho phân trang */
+.pagination {
+  justify-content: center; /* Canh giữa phân trang */
+  margin-top: 20px; /* Thêm khoảng cách 20px trên thanh phân trang */
+}
+
+.page-item .page-link {
+  padding: 0.5rem 1rem; /* Padding cho các liên kết phân trang */
+}
+
+.page-item.active .page-link {
+  background-color: #007bff; /* Màu nền cho trang hiện tại */
+  border-color: #007bff; /* Màu viền cho trang hiện tại */
+  color: #fff; /* Màu chữ cho trang hiện tại */
+}
+
+.page-item .page-link:hover {
+  background-color: #e9ecef; /* Màu nền khi hover */
+}
+
+.table-container .btn {
+  margin-right: 5px; /* Khoảng cách giữa các nút */
+}
+
+.table-container .btn-info {
+  background-color: #17a2b8;
+  border: none;
+}
+
+.table-container .btn-warning {
+  background-color: #ffc107;
+  border: none;
+}
+
+.table-container .btn-danger {
+  background-color: #dc3545;
+  border: none;
+}
+
+.table-container .btn-sm {
+  font-size: 0.875rem; /* Kích thước font nhỏ hơn cho nút */
+}
+
+#description {
+  text-align: left; /* Căn trái */
+  vertical-align: top; /* Căn trên */
+  white-space: normal; /* Cho phép xuống dòng nếu văn bản quá dài */
+  overflow: visible; /* Hiển thị đầy đủ nội dung */
+}
+#image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.img-container {
+  position: relative;
+  width: 120px; /* Đặt chiều rộng của mỗi ảnh */
+}
+
+
+.btn-remove {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: red;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 14px;
+}
+
+.btn-select-thumbnail {
+  margin-top: 5px;
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+/* Thumbnail Section */
+.thumbnail-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thumbnail-img {
+  max-width: 150px;
+  border-radius: 8px;
+}
+
+/* Image Gallery */
+.image-gallery {
+  padding: 0;
+}
+
+.card {
+  border: none;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-img-top {
+  height: 150px; /* Chiều cao cố định cho ảnh */
+  object-fit: cover; /* Cắt ảnh để phù hợp với kích thước mà không bị biến dạng */
+  width: 100%; /* Đảm bảo ảnh chiếm toàn bộ chiều rộng của card */
+  border-bottom: 1px solid #ddd;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+
+/* Upload Section */
+.upload-section input[type="file"] {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.5rem;
+}

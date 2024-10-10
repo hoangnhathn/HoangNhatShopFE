@@ -1,0 +1,140 @@
+<app-navbar></app-navbar>
+<div class="account-info-container">
+  <h2>Thông tin tài khoản</h2>
+
+  <div class="info-item">
+    <strong>Tài khoản:</strong> {{ userResponse.phone_number }}
+  </div>
+  <div class="info-item">
+    <strong>Họ tên:</strong> {{ userResponse.fullname }}
+  </div>
+  <div class="info-item">
+    <strong>Địa chỉ:</strong> {{ userResponse.address }}
+  </div>
+  <div class="info-item">
+    <strong>Ngày sinh:</strong> {{ userResponse.date_of_birth | date : "dd/MM/yyyy" }}
+  </div>
+
+  <div class="button-container">
+    <button (click)="openEditModal()">Sửa thông tin</button>
+    <button (click)="openChangePasswordModal()">Đổi mật khẩu</button>
+  </div>
+</div>
+<app-footer></app-footer>
+
+<!-- Modal Sửa UserDetail -->
+<div
+class="modal fade"
+id="editUserDetailModal"
+tabindex="-1"
+aria-labelledby="editUserDetailModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="editUserDetailModalLabel">Sửa Thông Tin</h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="updateUserDetail()" [formGroup]="editUserDetailForm">
+        <div class="mb-3">
+          <label for="fullname" class="form-label">Họ tên</label>
+          <input
+            type="text"
+            class="form-control"
+            id="fullname"
+            formControlName="fullname"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="phone_number" class="form-label">Số ĐT</label>
+          <input
+            type="text"
+            class="form-control"
+            id="phone_number"
+            formControlName="phone_number"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="address" class="form-label">Địa chỉ</label>
+          <input
+            type="text"
+            class="form-control"
+            id="address"
+            formControlName="address"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="date_of_birth" class="form-label"
+            >Ngày sinh</label
+          >
+          <input
+            type="date"
+            class="form-control"
+            id="date_of_birth"
+            formControlName="date_of_birth"
+            required
+          />
+        </div>
+        <div class="text-danger" *ngIf="editUserDetailForm.errors?.invalidDateOfBirth">
+          Ngày sinh không thể lớn hơn ngày hiện tại.
+        </div>
+
+        <button type="submit" class="btn btn-primary">Cập nhật</button>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-bs-dismiss="modal"
+      >
+        Đóng
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="changePasswordLabel">Thay đổi mật khẩu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="changePasswordForm" (ngSubmit)="onChangePassword()">
+          <div class="mb-3">
+            <label for="oldPassword" class="form-label">Mật khẩu cũ</label>
+            <input type="password" class="form-control" id="oldPassword" formControlName="oldPassword" required>
+          </div>
+          <div class="mb-3">
+            <label for="newPassword" class="form-label">Mật khẩu mới</label>
+            <input type="password" class="form-control" id="newPassword" formControlName="newPassword" required>
+          </div>
+          <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Xác nhận mật khẩu mới</label>
+            <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword" required>
+          </div>
+          <div *ngIf="changePasswordForm.errors?.invalidPassword" class="text-danger">
+            Mật khẩu mới và xác nhận mật khẩu không khớp.
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="changePasswordForm.invalid">Lưu thay đổi</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,149 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="product-wrapper">
+    <div class="row">
+      <div class="col-md-6">
+        <div
+          id="carouselExample"
+          class="carousel slide"
+          data-bs-ride="carousel"
+        >
+          <div class="carousel-inner">
+            <div
+              class="carousel-item"
+              *ngFor="let image of product?.product_images; let i = index"
+              [ngClass]="{ active: i === currentImageIndex }"
+            >
+              <img
+                [src]="image.image_url"
+                class="d-block w-100 product-image"
+                alt="Product Image"
+              />
+            </div>
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExample"
+            data-bs-slide="prev"
+            (click)="previousImage()"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExample"
+            data-bs-slide="next"
+            (click)="nextImage()"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+
+        <div class="thumbnail-container">
+          <div
+            class="thumbnail-item"
+            *ngFor="let image of product?.product_images; let i = index"
+            [ngClass]="{ active: i === currentImageIndex }"
+            (click)="thumbnailClick(i)"
+          >
+            <img
+              [src]="image.image_url"
+              alt="Thumbnail Image"
+              class="thumbnail-image"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="product-details">
+          <h2>{{ product?.product_name }}</h2>
+          <h4>
+            <ng-container *ngIf="product?.rating >= 0">
+              <ng-container
+                *ngFor="let star of [].constructor(product?.rating)"
+              >
+                <i class="fas fa-star" style="color: gold"></i>
+              </ng-container>
+              <ng-container
+                *ngFor="let star of [].constructor(5 - product?.rating)"
+              >
+                <i class="far fa-star" style="color: lightgray"></i>
+              </ng-container>
+            </ng-container>
+          </h4>
+          <p>{{ product?.description }}</p>
+          <p class="price">Giá: {{ product?.price | number : "1.0-0" }} VNĐ</p>
+          <div class="product-actions">
+            <button class="btn btn-primary" (click)="addToCart()">
+              Thêm vào giỏ hàng
+            </button>
+            <button class="btn btn-success" (click)="buyClick()">
+              Mua ngay
+            </button>
+          </div>
+          <div class="product-quantity">
+            <div class="border-wrapper">
+              <button (click)="decreaseQuantity()">-</button>
+              <input type="text" value="1" name="quantity" [value]="quantity" />
+              <button (click)="increaseQuantity()">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form nhập bình luận và đánh giá -->
+    <ng-container *ngIf="checkUser != 0">
+      <div class="review-form">
+        <label for="rating">Đánh giá:</label>
+        <ng-container *ngFor="let star of [].constructor(5); let i = index">
+          <i
+            class="fa-star"
+            [ngClass]="{
+              fas: i < selectedRating,
+              far: i >= selectedRating
+            }"
+            (click)="selectRating(i + 1)"
+            style="cursor: pointer; color: gold"
+          ></i>
+        </ng-container>
+
+        <br />
+        <label for="comment">Bình luận:</label>
+        <textarea
+          [(ngModel)]="comment"
+          rows="4"
+          class="form-control"
+        ></textarea>
+        <br />
+        <button class="btn btn-primary" (click)="submitReview(product.id)">
+          Gửi đánh giá
+        </button>
+      </div>
+    </ng-container>
+
+    <!-- Hiển thị danh sách bình luận -->
+    <div class="review-list">
+      <h4>Đánh giá từ khách hàng:</h4>
+      <div *ngFor="let review of reviews" class="review-item">
+        <p>
+          <strong>{{ review.user.fullname }}</strong>
+        </p>
+        <ng-container *ngFor="let star of [].constructor(review.rating)">
+          <i class="fas fa-star" style="color: gold"></i>
+        </ng-container>
+        <ng-container *ngFor="let star of [].constructor(5 - review.rating)">
+          <i class="far fa-star" style="color: lightgray"></i>
+        </ng-container>
+        <p>{{ review.comment }}</p>
+        <hr />
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

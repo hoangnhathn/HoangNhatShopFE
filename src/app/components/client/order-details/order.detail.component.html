@@ -1,0 +1,62 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="confirmation-container">
+        <h3>Thông tin đơn hàng</h3>
+        <div class="order-info">
+          <p><strong>Họ và tên:</strong> {{orderResponses.fullname}}</p>
+          <p><strong>Số điện thoại:</strong> {{orderResponses.phone_number}}</p>
+          <p><strong>Email:</strong> {{orderResponses.email}}</p>
+          <p><strong>Địa chỉ:</strong> {{orderResponses.address}}</p>
+          <p><strong>Địa chỉ giao hàng:</strong> {{orderResponses.shipping_address}}</p>
+          <p><strong>Ghi chú:</strong> {{orderResponses.note}}</p>
+          <p><strong>Ngày đặt hàng:</strong> {{orderResponses.order_date | date:'dd/MM/yyyy'}}</p>
+          <p><strong>Phương thức thanh toán:</strong> {{orderResponses.payment_method}}</p>
+          <p><strong>Phương thức giao hàng:</strong> {{orderResponses.shipping_method}}</p>
+          <p><strong>Ngày giao hàng dự kiến:</strong> {{orderResponses.shipping_date | date:'dd/MM/yyyy'}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col" class="text-start">Sản phẩm</th>
+            <th scope="col">Số lượng</th>
+            <th scope="col">Đơn giá</th>
+            <th scope="col">Tổng giá</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let item of orderResponses.order_details">
+            <tr>
+              <td>
+                <div class="product-info">
+                  <img
+                    [src]="item.thumbnail"
+                    alt="Product Image"
+                    class="product-image"
+                  />
+                  <span class="product-name">{{item.product_name}}</span>
+                </div>
+              </td>
+              <td>{{item.number_of_products}}</td>
+              <td>{{item.price | currency: 'VNĐ':'symbol':'1.0-0'}}</td>
+              <td>{{item.total_money | currency: 'VNĐ':'symbol':'1.0-0'}}</td>
+            </tr>
+          </ng-container>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4" class="text-end">Tổng cộng: {{orderResponses.total_money | currency: 'VNĐ':'symbol':'1.0-0'}}</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <div class="text-center mt-4">
+    <button class="btn btn-primary btn-lg" routerLink="/">Tiếp tục mua sắm</button>
+  </div>
+</div>
+<app-footer></app-footer>

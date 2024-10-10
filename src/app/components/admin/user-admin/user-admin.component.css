@@ -1,0 +1,115 @@
+/* Style cho Order Management */
+.container {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.table-container {
+  max-height: 1000px; /* Kích thước tối đa của bảng theo chiều cao */
+  overflow-y: auto;  /* Thanh cuộn dọc khi nội dung vượt quá chiều cao */
+  overflow-x: auto;  /* Thanh cuộn ngang khi nội dung vượt quá chiều rộng */
+}
+
+.table {
+  width: 1200px;
+  border-collapse: collapse; /* Gộp các border của các ô lại với nhau */
+}
+
+.table th, .table td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ddd; /* Border cho các ô */
+}
+
+.table th {
+  background-color: #f4f4f4; /* Màu nền cho các tiêu đề cột */
+}
+
+/* Style cho phân trang */
+.pagination {
+  justify-content: center; /* Canh giữa phân trang */
+  margin-top: 20px; /* Thêm khoảng cách 20px trên thanh phân trang */
+}
+
+.page-item .page-link {
+  padding: 0.5rem 1rem; /* Padding cho các liên kết phân trang */
+}
+
+.page-item.active .page-link {
+  background-color: #007bff; /* Màu nền cho trang hiện tại */
+  border-color: #007bff; /* Màu viền cho trang hiện tại */
+  color: #fff; /* Màu chữ cho trang hiện tại */
+}
+
+.page-item .page-link:hover {
+  background-color: #e9ecef; /* Màu nền khi hover */
+}
+
+.table-container .btn {
+  margin-right: 5px; /* Khoảng cách giữa các nút */
+}
+
+.table-container .btn-info {
+  background-color: #17a2b8;
+  border: none;
+}
+
+.table-container .btn-warning {
+  background-color: #ffc107;
+  border: none;
+}
+
+.table-container .btn-danger {
+  background-color: #dc3545;
+  border: none;
+}
+
+.table-container .btn-sm {
+  font-size: 0.875rem; /* Kích thước font nhỏ hơn cho nút */
+}
+
+.dropdown-item{
+  cursor: pointer;
+}
+.modal-xl {
+  max-width: 80%; /* Điều chỉnh để modal vừa với màn hình */
+  height: auto; /* Chiều cao tự động theo nội dung */
+}
+/* Điều chỉnh kích thước của bảng trong modal */
+.modal-body table {
+  width: 100%; /* Bảng chiếm toàn bộ chiều rộng của modal-body */
+  table-layout: fixed; /* Cố định layout của bảng */
+  font-size: 0.8rem; /* Giảm kích thước font */
+}
+
+.modal-body th, .modal-body td {
+  padding: 0.3rem; /* Giảm padding của các ô trong bảng */
+}
+
+.modal-body img {
+  max-width: 50px; /* Điều chỉnh kích thước hình ảnh trong bảng */
+  height: auto; /* Giữ tỷ lệ hình ảnh */
+}
+
+.modal-dialog {
+  max-width: 80%; /* Điều chỉnh kích thước modal */
+  height: 100%;
+}
+
+.modal-body {
+  overflow-x: auto; /* Thêm thanh cuộn ngang nếu bảng rộng */
+}
+
+.btn-create {
+  background-color: #007bff; /* Màu nền xanh */
+  color: #fff; /* Màu chữ trắng */
+  border: none; /* Không có đường viền */
+  padding: 10px 20px; /* Khoảng cách bên trong */
+  border-radius: 5px; /* Bo góc */
+  font-size: 16px; /* Kích thước chữ */
+  font-weight: bold; /* Chữ đậm */
+  cursor: pointer; /* Đổi con trỏ thành hình bàn tay khi hover */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển đổi */
+  margin-bottom: 20px;
+}

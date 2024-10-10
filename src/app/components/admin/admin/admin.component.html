@@ -1,0 +1,63 @@
+<!-- Sidebar -->
+<nav id="sidebar" class="bg-dark text-light p-3">
+  <h4 class="text-center mb-4">Admin Panel</h4>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        [ngClass]="{'active': selectedView === 'categories'}"
+        (click)="selectView('categories')"
+      >Danh mục sản phẩm</a>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        [ngClass]="{'active': selectedView === 'orders'}"
+        (click)="selectView('orders')"
+      >Đơn hàng</a>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        [ngClass]="{'active': selectedView === 'products'}"
+        (click)="selectView('products')"
+      >Sản phẩm</a>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        [ngClass]="{'active': selectedView === 'users'}"
+        (click)="selectView('users')"
+      >Tài khoản</a>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        [ngClass]="{'active': selectedView === 'slides'}"
+        (click)="selectView('slides')"
+      >Slides</a>
+    </li>
+  </ul>
+</nav>
+
+<!-- Main Content -->
+<div class="main-content">
+  <header class="d-flex justify-content-between align-items-center mb-4 p-3 bg-light shadow-sm">
+    <h1 class="m-0">Dashboard</h1>
+    <button class="btn btn-primary" (click)="logout()">Log Out</button>
+  </header>
+
+  <!-- Content Area -->
+  <div class="container mt-4">
+    <div [ngSwitch]="selectedView">
+      <app-category-admin *ngSwitchCase="'categories'"></app-category-admin>
+      <app-order-admin *ngSwitchCase="'orders'"></app-order-admin>
+      <app-product-admin *ngSwitchCase="'products'"></app-product-admin>
+      <app-user-admin *ngSwitchCase="'users'"></app-user-admin>
+      <app-slide-admin *ngSwitchCase="'slides'"></app-slide-admin>
+      <div *ngSwitchDefault>
+        <p>Chọn một mục từ sidebar để bắt đầu.</p>
+      </div>
+    </div>
+  </div>
+</div>

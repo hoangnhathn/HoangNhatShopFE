@@ -1,0 +1,174 @@
+.container {
+  padding: 20px;
+}
+
+.product-wrapper {
+  border: 1px solid #dee2e6; /* Thêm viền cho khối chứa ảnh và thông tin */
+  border-radius: 8px; /* Bo góc cho khối chứa */
+  background-color: #ffffff; /* Màu nền cho khối chứa */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Thêm bóng nhẹ cho khối chứa */
+  padding: 20px;
+}
+
+.product-image {
+  height: 400px;
+  object-fit: cover;
+}
+
+.thumbnail-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+
+.thumbnail-item {
+  width: 120px;
+  height: 120px;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: border 0.3s ease;
+}
+
+.thumbnail-item:last-child {
+  margin-right: 0;
+}
+
+.thumbnail-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumbnail-item.active {
+  border: 4px solid #007bff;
+}
+
+.product-details {
+  color: #333;
+  padding: 20px;
+  border: 1px solid #dee2e6; /* Thêm viền cho phần thông tin sản phẩm */
+  border-radius: 8px; /* Bo góc cho phần thông tin */
+  background-color: #f8f9fa; /* Nền màu sáng */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Thêm bóng nhẹ cho phần thông tin */
+}
+
+.product-details h2 {
+  margin-bottom: 10px;
+}
+
+.product-details p {
+  margin-bottom: 10px;
+}
+
+.product-details .price{
+  color: red;
+}
+
+.product-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.product-actions button {
+  flex: 1;
+}
+
+.border-wrapper {
+  border: 1px solid #dee2e6;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.product-quantity {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.product-quantity button {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+}
+
+.product-quantity input {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  color: #333;
+  font-size: 16px;
+  text-align: center;
+  width: 50px;
+  margin: 0 10px;
+  border-radius: 4px;
+}
+
+.product-quantity input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+.carousel-control-prev,
+.carousel-control-next {
+  width: 40px; /* Kích thước rộng của nút điều khiển */
+  height: 40px; /* Chiều cao của nút điều khiển */
+  background-color: rgba(0, 0, 0, 0.5); /* Nền bán trong suốt để tạo hiệu ứng rõ ràng */
+  border: 2px solid rgba(255, 255, 255, 0.8); /* Viền sáng xung quanh nút điều khiển */
+  border-radius: 50%; /* Để viền viền tròn quanh nút điều khiển */
+  display: flex; /* Căn giữa các icon */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  justify-content: center; /* Căn giữa theo chiều ngang */
+  z-index: 10; /* Đặt các nút điều khiển ở trên cùng của ảnh */
+  top: 50%; /* Đặt nút ở giữa theo chiều dọc */
+  transform: translateY(-50%); /* Căn giữa theo chiều dọc */
+}
+
+.carousel-control-prev {
+  left: 10px; /* Khoảng cách từ bên trái */
+}
+
+.carousel-control-next {
+  right: 10px; /* Khoảng cách từ bên phải */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: transparent; /* Nền trong suốt cho icon mũi tên */
+  color: white; /* Màu mũi tên */
+}
+
+.carousel-control-prev-icon::before,
+.carousel-control-next-icon::before {
+  font-size: 18px; /* Kích thước mũi tên */
+  color: white; /* Màu mũi tên */
+}
+
+.carousel-item {
+  transition: none; /* Loại bỏ hiệu ứng trượt */
+}
+
+.product-details p {
+  white-space: normal;   /* Cho phép xuống dòng */
+  word-wrap: break-word; /* Tự động xuống dòng khi từ quá dài */
+  overflow: hidden;      /* Ngăn việc nội dung vượt khỏi khung */
+}
+
+.review-form i {
+  font-size: 24px; /* Kích thước ngôi sao */
+}
+
+.review-form i.fas {
+  color: gold; /* Ngôi sao đầy sẽ có màu vàng */
+}
+
+.review-form i.far {
+  color: lightgray; /* Ngôi sao rỗng sẽ có màu xám nhạt */
+}

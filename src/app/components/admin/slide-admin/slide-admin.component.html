@@ -1,0 +1,122 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+  </div>
+
+  <div>
+    <button class="btn-create" (click)="openCreateModal()">Thêm</button>
+  </div>
+  <!-- Modal thêm Slides -->
+<div
+class="modal fade"
+id="createSlideModal"
+tabindex="-1"
+aria-labelledby="createSlideModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="createSlideModalLabel">Thêm Slide</h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="createSlideAndUploadImages()" [formGroup]="createSlideForm">
+        <div class="mb-3">
+          <label for="link" class="form-label">Liên kết</label>
+          <input type="text" class="form-control" id="link" formControlName="link" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="fileInput" class="form-label">Chọn ảnh</label>
+          <input type="file" id="fileInput" (change)="onFileSelect($event)" multiple />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Thêm</button>
+      </form>
+
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-bs-dismiss="modal"
+      >
+        Đóng
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+  <!-- Categories Table -->
+  <div class="table-container">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Ảnh</th>
+          <th scope="col">Link</th>
+          <th scope="col">Thao tác</th>
+          <!-- Cột mới cho nút -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let slide of slides">
+          <td>{{ slide.id }}</td>
+          <td><img
+            [src]="slide.image_url"
+            width="50"
+          /></td>
+          <td>{{ slide.link }}</td>
+          <td>
+            <button
+              class="btn btn-danger btn-sm"
+              (click)="deleteSlide(slide.id)"
+            >
+              Xóa
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item" *ngIf="currentPage > 0">
+        <a
+          class="page-link"
+          href="#"
+          aria-label="Previous"
+          (click)="onPageChange(0)"
+        >
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+      </li>
+      <ng-container *ngFor="let page of visiblePages">
+        <li class="page-item" [ngClass]="{ active: page === currentPage + 1 }">
+          <a class="page-link" (click)="onPageChange(page - 1)">{{ page }}</a>
+        </li>
+      </ng-container>
+      <li class="page-item" *ngIf="currentPage < totalPages - 1">
+        <a
+          class="page-link"
+          aria-label="Next"
+          (click)="onPageChange(totalPages - 1)"
+        >
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

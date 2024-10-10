@@ -1,0 +1,550 @@
+<div class="container mt-4">
+  <!-- Search and Sort Controls -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <!-- Search Input -->
+    <div class="input-group w-50">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Tìm kiếm đơn hàng..."
+        [(ngModel)]="keyword"
+        name="keyword"
+        (input)="onKeywordChange()"
+      />
+    </div>
+
+    <!-- Role Dropdown -->
+    <div class="dropdown">
+      <button
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        id="sortDropdown"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        {{ selectedRole }}
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+        <li *ngFor="let role of roles" [value]="role.id">
+          <a class="dropdown-item" (click)="onRoleChange(role.id)">{{
+            role.name
+          }}</a>
+        </li>
+      </ul>
+    </div>
+    <!-- Sort Dropdown -->
+    <div class="dropdown">
+      <button
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        id="sortDropdown"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        Sắp xếp theo
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+        <li>
+          <a class="dropdown-item" (click)="onSortChange('orderDate', 'asc')"
+            >Thời gian đặt hàng tăng dần</a
+          >
+        </li>
+        <li>
+          <a class="dropdown-item" (click)="onSortChange('orderDate', 'dsc')"
+            >Thời gian đặt hàng giảm dần</a
+          >
+        </li>
+        <li>
+          <a class="dropdown-item" (click)="onSortChange('id', 'asc')"
+            >ID tăng dần</a
+          >
+        </li>
+        <li>
+          <a class="dropdown-item" (click)="onSortChange('id', 'dsc')"
+            >ID giảm dần</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div>
+    <button class="btn-create" (click)="openCreateModal()">Thêm</button>
+  </div>
+  <!-- Modal thêm User-->
+  <div
+    class="modal fade"
+    id="createUserModal"
+    tabindex="-1"
+    aria-labelledby="createUserModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createUserModalLabel">Thêm tài khoản</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="createUser()" [formGroup]="createUserForm">
+            <div class="mb-3">
+              <label for="fullname" class="form-label">Họ Tên</label>
+              <input
+                type="text"
+                class="form-control"
+                id="create_fullname"
+                formControlName="fullname"
+                required
+              />
+            </div>
+            <div
+              *ngIf="
+                createUserForm.get('fullname')!.invalid &&
+                createUserForm.get('fullname')!.touched
+              "
+              class="text-danger"
+            >
+              Không được để trống
+            </div>
+            <div class="mb-3">
+              <label for="phone_number" class="form-label">Số ĐT</label>
+              <input
+                type="text"
+                class="form-control"
+                id="create_phone_number"
+                formControlName="phone_number"
+                required
+              />
+            </div>
+            <div
+              *ngIf="
+                createUserForm.get('phone_number')!.invalid &&
+                createUserForm.get('phone_number')!.touched
+              "
+              class="text-danger"
+            >
+              Không hợp lệ
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Mật khẩu</label>
+              <input
+                type="password"
+                class="form-control"
+                id="create_password"
+                formControlName="password"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="retype_password" class="form-label">Xác nhận mật khẩu</label>
+              <input
+                type="password"
+                class="form-control"
+                id="create_retype_password"
+                formControlName="retype_password"
+                required
+              />
+            </div>
+            <div class="text-danger" *ngIf="createUserForm.errors?.invalidPassword">
+              Mật khẩu không trùng.
+            </div>
+            <div class="mb-3">
+              <label for="address" class="form-label">Địa chỉ</label>
+              <input
+                type="text"
+                class="form-control"
+                id="create_address"
+                formControlName="address"
+                required
+              />
+            </div>
+            <div
+            *ngIf="
+              editUserForm.get('address')!.invalid &&
+              editUserForm.get('address')!.touched
+            "
+            class="text-danger"
+          >
+            Địa chỉ phải 5 ký tự trở lên
+          </div>
+
+            <div class="mb-3">
+              <label for="date_of_birth" class="form-label">Ngày sinh</label>
+              <input
+                type="date"
+                class="form-control"
+                id="create_date_of_birth"
+                formControlName="date_of_birth"
+                required
+              />
+            </div>
+            <div class="text-danger" *ngIf="createUserForm.errors?.invalidDateOfBirth">
+              Ngày sinh không thể lớn hơn ngày hiện tại.
+            </div>
+            <div class="mb-3">
+              <label for="google_account_id" class="form-label"
+                >Google ID</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="create_google_account_id"
+                formControlName="google_account_id"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="facebook_account_id" class="form-label"
+                >Facebook ID</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="create_facebook_account_id"
+                formControlName="facebook_account_id"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="role" class="form-label">Quyền</label>
+              <select
+                class="form-select"
+                id="role"
+                formControlName="role"
+                required
+              >
+                <option *ngFor="let role of roles" [value]="role.id">
+                  {{ role.name }}
+                </option>
+              </select>
+            </div>
+            <div
+              *ngIf="
+                createUserForm.get('role')!.invalid &&
+                createUserForm.get('role')!.touched
+              "
+              class="text-danger"
+            >
+              Không được để trống
+            </div>
+            <button type="submit" class="btn btn-primary">Thêm</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Users Table -->
+  <div class="table-container">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Họ Tên</th>
+          <th scope="col">Số Điện Thoại</th>
+          <th scope="col">Địa Chỉ</th>
+          <th scope="col">Ngày Sinh</th>
+          <th scope="col">Quyền</th>
+          <th scope="col">Trạng Thái</th>
+          <th scope="col">Thao Tác</th>
+          <!-- Cột mới cho nút -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.id }}</td>
+          <td>{{ user.fullname }}</td>
+          <td>{{ user.phone_number }}</td>
+          <td>{{ user.address }}</td>
+          <td>{{ user.date_of_birth | date : "dd/MM/yyyy" }}</td>
+          <td>{{ user.role.name }}</td>
+          <td>{{ user.is_active ? "Kích hoạt" : "Không kích hoạt" }}</td>
+
+          <td>
+            <button class="btn btn-info btn-sm" (click)="openModal(user.id)">
+              Xem
+            </button>
+            <button
+              class="btn btn-warning btn-sm"
+              (click)="openEditModal(user.id)"
+            >
+              Sửa
+            </button>
+            <button
+              class="btn btn-danger btn-sm"
+              (click)="deleteUser(user.id)"
+            >
+              Xóa
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal xem tài khoản -->
+  <div
+    class="modal fade"
+    id="userModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Chi tiết tài khoản</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>ID:</strong> {{ selectedUser?.id }}</p>
+          <p><strong>Họ tên:</strong> {{ selectedUser?.fullname }}</p>
+          <p>
+            <strong>Số điện thoại:</strong> {{ selectedUser?.phone_number }}
+          </p>
+          <p><strong>Địa chỉ:</strong> {{ selectedUser?.address }}</p>
+          <p>
+            <strong>Ngày sinh:</strong>
+            {{ selectedUser?.date_of_birth | date : "dd/MM/yyyy" }}
+          </p>
+          <p><strong>Trạng thái</strong> {{ selectedUser?.is_active ? "Kích hoạt" : "Chưa kích hoạt" }}</p>
+          <p><strong>Quyền</strong> {{ selectedUser?.role.name}}</p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   <!-- Modal Sửa Tài Khoản -->
+  <div
+    class="modal fade"
+    id="editUserModal"
+    tabindex="-1"
+    aria-labelledby="editUserModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editUserModalLabel">Sửa Tài Khoản</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="updateUser()" [formGroup]="editUserForm">
+            <div class="mb-3">
+              <label for="fullname" class="form-label">Tên người nhận</label>
+              <input
+                type="text"
+                class="form-control"
+                id="fullname"
+                formControlName="fullname"
+                required
+              />
+            </div>
+            <div
+              *ngIf="
+                editUserForm.get('fullname')!.invalid &&
+                editUserForm.get('fullname')!.touched
+              "
+              class="text-danger"
+            >
+              Họ và tên không được để trống
+            </div>
+
+            <div class="mb-3">
+              <label for="phone_number" class="form-label">Số điện thoại</label>
+              <input
+                type="text"
+                class="form-control"
+                id="phone_number"
+                formControlName="phone_number"
+                required
+              />
+            </div>
+            <div
+              *ngIf="
+                editUserForm.get('phone_number')!.invalid &&
+                editUserForm.get('phone_number')!.touched
+              "
+              class="text-danger"
+            >
+              Số điện thoại không hợp lệ
+            </div>
+
+            <div class="mb-3">
+              <label for="phone_number" class="form-label">Mật khẩu</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                formControlName="password"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="address" class="form-label"
+                >Địa chỉ</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="address"
+                formControlName="address"
+                required
+              />
+            </div>
+            <div
+              *ngIf="
+                editUserForm.get('address')!.invalid &&
+                editUserForm.get('address')!.touched
+              "
+              class="text-danger"
+            >
+              Địa chỉ phải 5 ký tự trở lên
+            </div>
+
+            <div class="mb-3">
+              <label for="date_of_birth" class="form-label"
+                >Ngày sinh</label
+              >
+              <input
+                type="date"
+                class="form-control"
+                id="date_of_birth"
+                formControlName="date_of_birth"
+                required
+              />
+            </div>
+            <div class="text-danger" *ngIf="editUserForm.errors?.invalidDateOfBirth">
+              Ngày sinh không thể lớn hơn ngày hiện tại.
+            </div>
+
+            <div class="mb-3">
+              <label for="google_account_id" class="form-label"
+                >Google ID</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="google_account_id"
+                formControlName="google_account_id"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="facebook_account_id" class="form-label"
+                >Facebook ID</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="facebook_account_id"
+                formControlName="facebook_account_id"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="is_active" class="form-label">Trạng thái</label>
+              <select
+                class="form-control"
+                id="is_active"
+                formControlName="is_active"
+                required
+              >
+                <option value="true">Kích hoạt</option>
+                <option value="false">Không kích hoạt</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="role" class="form-label">Quyền</label>
+              <select
+                class="form-control"
+                id="role"
+                formControlName="role"
+                required
+              >
+                <option value="1">Admin</option>
+                <option value="2">User</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item" *ngIf="currentPage > 0">
+        <a
+          class="page-link"
+          href="#"
+          aria-label="Previous"
+          (click)="onPageChange(0)"
+        >
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+      </li>
+      <ng-container *ngFor="let page of visiblePages">
+        <li class="page-item" [ngClass]="{ active: page === currentPage + 1 }">
+          <a class="page-link" (click)="onPageChange(page - 1)">{{ page }}</a>
+        </li>
+      </ng-container>
+      <li class="page-item" *ngIf="currentPage < totalPages - 1">
+        <a
+          class="page-link"
+          aria-label="Next"
+          (click)="onPageChange(totalPages - 1)"
+        >
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

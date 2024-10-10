@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="login-form mx-auto">
+        <h2 class="login-header">Đăng nhập</h2>
+        <form (ngSubmit)="login()" #loginForm="ngForm">
+          <div class="form-group">
+            <label for="phoneNumber">Số điện thoại</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="phoneNumber"
+              required
+              id="phoneNumber"
+              name="phoneNumber"
+              (focus)="loginForm.form.markAsTouched()"
+              autocomplete="tel"
+            />
+            <div class="divider-nospace"></div>
+          </div>
+          <div class="mt-5"></div>
+          <div class="form-group password-field">
+            <label for="password">Mật khẩu</label>
+            <input
+              type="password"
+              placeholder="Ít nhất 3 ký tự"
+              class="form-control"
+              [(ngModel)]="password"
+              required
+              name="password"
+              id="password"
+              autocomplete="current-password"
+              [type]="showPassword ? 'text' : 'password'"
+            />
+            <i
+              class="password-toggle fas fa-eye-slash"
+              [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"
+              (click)="togglePasswordVisibility()"
+            ></i>
+            <div class="divider-nospace"></div>
+          </div>
+          <div class="form-group">
+            <div class="form-check checkbox-text">
+              <span style="display: flex">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="remember"
+                  autocomplete="off"
+                  [(ngModel)]="rememberMe"
+                  name="rememberMe"
+                />
+                <label class="form-check-label text-start" for="remember"
+                  >Ghi nhớ đăng nhập</label
+                >
+              </span>
+              <a href="#" class="register-link">Quên mật khẩu</a>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="login-button" (click)="login()">
+              Đăng nhập
+            </button>
+            <p class="text-center">
+              Bạn chưa đăng ký?
+              <span><a href="#" class="register-link">Tạo tài khoản</a></span>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

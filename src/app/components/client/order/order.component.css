@@ -1,0 +1,133 @@
+.container {
+  color: black; /* Đổi màu chữ tổng thể sang màu đen */
+  margin-top: 30px;
+}
+
+.intro-section {
+  text-align: center;
+  color: black; /* Đổi màu chữ tiêu đề sang màu đen */
+  padding: 20px 0;
+}
+
+.section-header {
+  color: rgb(233, 66, 176);
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.form-control {
+  background-color: rgb(19, 23, 42);
+  border: 1px solid rgb(29, 33, 54);
+  color: white;
+  transition: border-color 0.3s;
+}
+
+.form-control:focus {
+  border-color: rgb(233, 66, 176);
+  background-color: rgb(19, 23, 42);
+}
+
+.form-label {
+  color: black; /* Đổi màu chữ label sang màu đen */
+}
+
+.table-order {
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 10px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: rgb(12, 13, 54);
+}
+
+th,
+td {
+  padding: 15px;
+  text-align: center;
+  color: white;
+}
+
+th {
+  border-bottom: 2px solid rgb(233, 66, 176);
+}
+
+.product-info {
+  display: flex;
+  align-items: center;
+}
+
+.product-image {
+  width: 70px;
+  height: 70px;
+  border-radius: 5px;
+  margin-right: 15px;
+}
+
+.product-name {
+  color: white;
+  font-weight: bold;
+}
+
+.order-summary {
+  text-align: right;
+  margin-top: 15px;
+}
+
+.btn-gradient {
+  background: linear-gradient(to right, rgb(225, 64, 180), rgb(126, 43, 237));
+  color: white;
+  border-radius: 30px;
+  width: 200px;
+  transition: background 0.3s;
+}
+
+.btn-gradient:hover {
+  background: linear-gradient(to right, rgb(126, 43, 237), rgb(225, 64, 180));
+}
+
+/* Các kiểu dáng khác vẫn giữ nguyên */
+
+.form-control::placeholder {
+  color: rgb(180, 180, 180); /* Màu chữ của placeholder */
+  opacity: 1; /* Đảm bảo độ mờ (opacity) của placeholder */
+}
+
+.form-control:focus::placeholder {
+  color: rgb(200, 200, 200); /* Màu placeholder khi input được focus */
+}
+
+
+.form-select {
+  background-color: rgb(19, 23, 42);
+  border: 1px solid rgb(29, 33, 54);
+  color: white;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.form-select:focus {
+  border-color: rgb(233, 66, 176);
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity-btn {
+  width: 32px; /* Chiều rộng nút */
+  height: 32px; /* Chiều cao nút */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px; /* Góc bo tròn */
+  font-size: 16px; /* Kích thước chữ */
+}
+
+.quantity-display {
+  margin: 0 10px; /* Khoảng cách giữa các nút */
+  font-size: 16px; /* Kích thước chữ */
+  min-width: 32px; /* Chiều rộng tối thiểu của phần hiển thị số lượng */
+  text-align: center; /* Căn giữa chữ */
+}

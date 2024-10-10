@@ -1,0 +1,227 @@
+<div class="container mt-4">
+  <!-- Search and Sort Controls -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <!-- Search Input -->
+    <div class="input-group w-50">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Tìm kiếm đơn hàng..."
+        [(ngModel)]="keyword"
+        name="keyword"
+        (input)="onKeywordChange()"
+      />
+    </div>
+    <!-- Sort Dropdown -->
+    <div class="dropdown">
+      <button
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        id="sortDropdown"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        Sắp xếp theo
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+        <li>
+          <a class="dropdown-item" (click)="onSortChange('id', 'asc')"
+            >ID tăng dần</a
+          >
+        </li>
+        <li>
+          <a class="dropdown-item" (click)="onSortChange('id', 'dsc')"
+            >ID giảm dần</a
+          >
+        </li>
+        <li>
+          <a class="dropdown-item" (click)="onSortChange('name', 'asc')"
+            >Tên a - z</a
+          >
+        </li>
+        <li>
+          <a class="dropdown-item" (click)="onSortChange('name', 'dsc')"
+            >Tên z - a</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div>
+    <button class="btn-create" (click)="openCreateModal()">Thêm</button>
+  </div>
+  <!-- Modal thêm Category -->
+  <div
+    class="modal fade"
+    id="createCategoryModal"
+    tabindex="-1"
+    aria-labelledby="createCategoryModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createCategoryModalLabel">Thêm danh mục sản phẩm</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="createCategory()" [formGroup]="createCategoryForm">
+
+            <div class="mb-3">
+              <label for="name" class="form-label">Tên Danh Mục Sản Phẩm</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                formControlName="name"
+                required
+              />
+            </div>
+            <div
+              *ngIf="
+                createCategoryForm.get('name')!.invalid &&
+                createCategoryForm.get('name')!.touched
+              "
+              class="text-danger"
+            >
+              Không được để trống
+            </div>
+            <button type="submit" class="btn btn-primary">Thêm</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Categories Table -->
+  <div class="table-container">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Tên Danh Mục Sản Phẩm</th>
+          <th scope="col">Hành Động</th>
+          <!-- Cột mới cho nút -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of categories">
+          <td>{{ category.id }}</td>
+          <td>{{ category.name }}</td>
+          <td>
+            <button
+              class="btn btn-warning btn-sm"
+              (click)="openEditModal(category.id)"
+            >
+              Sửa
+            </button>
+            <button
+              class="btn btn-danger btn-sm"
+              (click)="deleteCategory(category.id)"
+            >
+              Xóa
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Modal Sửa Category -->
+  <div
+    class="modal fade"
+    id="editCategoryModal"
+    tabindex="-1"
+    aria-labelledby="editCategoryModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editCategoryModalLabel">Sửa Danh Mục</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="updateCategory()" [formGroup]="editCategoryForm">
+
+            <div class="mb-3">
+              <label for="name" class="form-label">Tên Danh Mục Sản Phẩm</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                formControlName="name"
+                required
+              />
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item" *ngIf="currentPage > 0">
+        <a
+          class="page-link"
+          href="#"
+          aria-label="Previous"
+          (click)="onPageChange(0)"
+        >
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+      </li>
+      <ng-container *ngFor="let page of visiblePages">
+        <li class="page-item" [ngClass]="{ active: page === currentPage + 1 }">
+          <a class="page-link" (click)="onPageChange(page - 1)">{{ page }}</a>
+        </li>
+      </ng-container>
+      <li class="page-item" *ngIf="currentPage < totalPages - 1">
+        <a
+          class="page-link"
+          aria-label="Next"
+          (click)="onPageChange(totalPages - 1)"
+        >
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

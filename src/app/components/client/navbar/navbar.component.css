@@ -1,0 +1,45 @@
+.form-control-dark {
+  border-color: var(--bs-gray);
+}
+.form-control-dark:focus {
+  border-color: #fff;
+  box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25);
+}
+
+.text-small {
+  font-size: 85%;
+}
+
+.dropdown-toggle:not(:focus) {
+  outline: 0;
+}
+
+.nav-link-icon {
+  font-size: 2rem; /* Adjust the size as needed */
+}
+
+.nav-link-text {
+  font-size: 1.5rem; /* Adjust the size as needed */
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Adjust spacing between icon and text as needed */
+}
+
+.btn-lg-font {
+  font-size: 1.25rem; /* Adjust the size as needed */
+}
+
+.form-control {
+  flex: 1; /* Ensures the input takes up available space */
+}
+
+.btn-primary {
+  font-size: 1.25rem; /* Ensure the search button also has a larger font size */
+}
+
+.dropdown-item {
+  font-size: 1.2rem; /* Tăng cỡ chữ của các mục dropdown */
+}

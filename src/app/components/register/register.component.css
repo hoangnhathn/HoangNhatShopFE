@@ -1,0 +1,156 @@
+.container {
+  color: white;
+  height: 100vh;
+}
+
+.form-control input {
+  background-color: white;
+}
+
+.register-form {
+  background-color: rgb(12, 12, 55);
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 500px;
+  border: 1px solid rgb(32, 34, 60); /* Đã sửa lại màu border */
+  align-items: center;
+  justify-content: center;
+  margin: auto; /* Đặt margin tự động để căn giữa form */
+}
+
+.register-header {
+  text-align: center;
+  color: rgb(105, 244, 181);
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  color: rgb(243, 165, 42);
+}
+
+.form-control {
+  background-color: transparent;
+  border: none;
+  color: white;
+  border-radius: 5px; /* Thêm border-radius để làm mềm các cạnh */
+}
+
+.form-control:focus {
+  color: white;
+  background-color: transparent;
+  outline: none;
+  box-shadow: none;
+  border-color: transparent;
+}
+
+.password-field {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgb(98, 0, 255);
+  cursor: pointer;
+}
+
+.checkbox-text {
+  color: rgb(243, 165, 42);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.checkbox-custom input[type="checkbox"] {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  appearance: none;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.checkbox-custom input[type="checkbox"]:checked {
+  background-color: rgb(233, 66, 178);
+  border-color: white;
+}
+
+.form-check-input {
+  margin-right: 5px;
+}
+
+.register-link {
+  color: rgb(105, 244, 181);
+  text-decoration: none;
+}
+
+.register-button {
+  background: linear-gradient(to right, rgb(225, 64, 180), rgb(126, 43, 237));
+  color: white;
+  border-radius: 30px;
+  width: 100%;
+  padding: 10px 0;
+  margin-top: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.register-button:hover {
+  background: linear-gradient(
+    to right,
+    rgb(225, 64, 180, 0.8),
+    rgb(126, 43, 237, 0.8)
+  ); /* Thêm hiệu ứng hover */
+}
+
+.password-input-wrapper {
+  position: relative;
+}
+
+.password-input-wrapper input {
+  width: 100%;
+  padding-right: 30px; /* Đảm bảo chỗ trống cho icon */
+}
+
+.form-control::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+  opacity: 1;
+}
+
+/* Đặt màu nền cho các ô input */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="checkbox"] {
+  background-color: #fff; /* màu trắng */
+  color: #000; /* màu chữ đen */
+}
+
+/* Đặt màu nền cho các ô input khi chúng được focus */
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="checkbox"]:focus {
+  background-color: #fff; /* màu trắng */
+  color: #000; /* màu chữ đen */
+  border: 2px solid #000; /* Đổi viền khi focus */
+  outline: none; /* Bỏ viền mặc định khi focus */
+}
+
+.password-toggle {
+  margin-left: 10px; /* Điều chỉnh khoảng cách theo ý muốn */
+}
+
+.text-danger {
+  margin: 5px 0 0 0; /* Điều chỉnh khoảng cách giữa input và thông báo lỗi */
+}

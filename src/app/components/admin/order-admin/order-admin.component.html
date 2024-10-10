@@ -1,0 +1,489 @@
+<div class="container mt-4">
+  <!-- Search and Sort Controls -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <!-- Search Input -->
+    <div class="input-group w-50">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Tìm kiếm đơn hàng..."
+        [(ngModel)]="keyword"
+        name="keyword"
+        (input)="onKeywordChange()"
+      />
+    </div>
+
+    <!-- Sort Dropdown -->
+    <div class="dropdown">
+      <button
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        id="sortDropdown"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        Sắp xếp theo
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+        <li>
+          <a class="dropdown-item" (click)="onSortChange('orderDate', 'asc')"
+            >Thời gian đặt hàng tăng dần</a
+          >
+        </li>
+        <li>
+          <a class="dropdown-item" (click)="onSortChange('orderDate', 'dsc')"
+            >Thời gian đặt hàng giảm dần</a
+          >
+        </li>
+        <li>
+          <a class="dropdown-item" (click)="onSortChange('id', 'asc')"
+            >ID tăng dần</a
+          >
+        </li>
+        <li>
+          <a class="dropdown-item" (click)="onSortChange('id', 'dsc')"
+            >ID giảm dần</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Orders Table -->
+  <div class="table-container">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">ID Đơn Hàng</th>
+          <th scope="col">ID Khách Hàng</th>
+          <th scope="col">Tên Khách Hàng</th>
+          <th scope="col">Số Điện Thoại</th>
+          <th scope="col">Email</th>
+          <th scope="col">Địa Chỉ</th>
+          <th scope="col">Địa Chỉ Giao Hàng</th>
+          <th scope="col">Phương Thức Thanh Toán</th>
+          <th scope="col">Phương Thức Vận Chuyển</th>
+          <th scope="col">Thời Gian Đặt Hàng</th>
+          <th scope="col">Thời Gian Giao Hàng Dự Kiến</th>
+          <th scope="col">Trạng Thái</th>
+          <th scope="col">Active</th>
+          <th scope="col">Ghi Chú</th>
+          <th scope="col">Tổng Tiền</th>
+          <th scope="col">Hành Động</th>
+          <!-- Cột mới cho nút -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td>{{ order.id }}</td>
+          <td>{{ order.user_id }}</td>
+          <td>{{ order.fullname }}</td>
+          <td>{{ order.phone_number }}</td>
+          <td>{{ order.email }}</td>
+          <td>{{ order.address }}</td>
+          <td>{{ order.shipping_address }}</td>
+          <td>{{ order.payment_method }}</td>
+          <td>{{ order.shipping_method }}</td>
+          <td>{{ order.order_date | date : "dd/MM/yyyy" }}</td>
+          <td>{{ order.shipping_date | date : "dd/MM/yyyy" }}</td>
+          <td>{{ order.status === 'pending' ? 'Đang chờ' :
+            order.status === 'processing' ? 'Đang xử lý' :
+            order.status === 'shipped' ? 'Đã giao' :
+            order.status === 'delivered' ? 'Đã nhận' :
+            order.status === 'cancelled' ? 'Đã hủy' :
+            'Trạng thái không xác định'
+         }}</td>
+          <td>{{  order.active ? 'Kích hoạt' : 'Không kích hoạt'  }}</td>
+          <td>{{ order.note }}</td>
+          <td>{{ order.total_money }}</td>
+
+          <td>
+            <button class="btn btn-info btn-sm" (click)="openModal(order.id)">
+              Xem
+            </button>
+            <button
+              class="btn btn-warning btn-sm"
+              (click)="openEditModal(order.id)"
+            >
+              Sửa
+            </button>
+            <button
+              class="btn btn-danger btn-sm"
+              (click)="deleteOrder(order.id)"
+            >
+              Xóa
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- ModalView -->
+  <div
+    class="modal fade"
+    id="orderModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Chi tiết đơn hàng</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>ID:</strong> {{ selectedOrder?.id }}</p>
+          <p>
+            <strong>Ngày đặt:</strong>
+            {{ selectedOrder?.order_date | date : "dd/MM/yyyy" }}
+          </p>
+          <p><strong>Tên người nhận:</strong> {{ selectedOrder?.fullname }}</p>
+          <p>
+            <strong>Số điện thoại:</strong> {{ selectedOrder?.phone_number }}
+          </p>
+          <p><strong>Địa chỉ:</strong> {{ selectedOrder?.shipping_address }}</p>
+          <p>
+            <strong>Ngày giao hàng:</strong>
+            {{ selectedOrder?.shipping_date | date : "dd/MM/yyyy" }}
+          </p>
+          <p>
+            <strong>Tổng tiền:</strong>
+            {{ selectedOrder?.total_money | currency }}
+          </p>
+
+          <h6><strong>Chi tiết sản phẩm</strong></h6>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Tên sản phẩm</th>
+                <th>Hình ảnh</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Tổng tiền</th>
+                <th>Màu sắc</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let detail of selectedOrder?.order_details">
+                <td>{{ detail.id }}</td>
+                <td>{{ detail.product_name }}</td>
+                <td>
+                  <img
+                    [src]="detail.thumbnail"
+                    alt="{{ detail.product_name }}"
+                    width="50"
+                  />
+                </td>
+                <td>{{ detail.price | currency }}</td>
+                <td>{{ detail.number_of_products }}</td>
+                <td>
+                  {{
+                    detail.total_money ? (detail.total_money | currency) : "N/A"
+                  }}
+                </td>
+                <td>{{ detail.color ? detail.color : "N/A" }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Sửa Đơn Hàng -->
+  <div
+    class="modal fade"
+    id="editOrderModal"
+    tabindex="-1"
+    aria-labelledby="editOrderModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editOrderModalLabel">Sửa Đơn Hàng</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="updateOrder()" [formGroup]="editOrderForm">
+            <div class="mb-3">
+              <label for="fullname" class="form-label">Tên người nhận</label>
+              <input
+                type="text"
+                class="form-control"
+                id="fullname"
+                formControlName="fullname"
+                required
+              />
+            </div>
+            <div
+              *ngIf="
+                editOrderForm.get('fullname')!.invalid &&
+                editOrderForm.get('fullname')!.touched
+              "
+              class="text-danger"
+            >
+              Họ và tên không được để trống
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="text"
+                class="form-control"
+                id="email"
+                formControlName="email"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="phone_number" class="form-label">Số điện thoại</label>
+              <input
+                type="text"
+                class="form-control"
+                id="phone_number"
+                formControlName="phone_number"
+                required
+              />
+            </div>
+            <div
+              *ngIf="
+                editOrderForm.get('phone_number')!.invalid &&
+                editOrderForm.get('phone_number')!.touched
+              "
+              class="text-danger"
+            >
+              Số điện thoại phải 10 số và bắt đầu từ số 0
+            </div>
+
+            <div class="mb-3">
+              <label for="shipping_address" class="form-label"
+                >Địa chỉ giao hàng</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="shipping_address"
+                formControlName="shipping_address"
+                required
+              />
+            </div>
+            <div
+              *ngIf="
+                editOrderForm.get('shipping_address')!.invalid &&
+                editOrderForm.get('shipping_address')!.touched
+              "
+              class="text-danger"
+            >
+              Địa chỉ phải 5 ký tự trở lên
+            </div>
+
+            <div class="mb-3">
+              <label for="order_date" class="form-label"
+                >Thời gian đặt hàng</label
+              >
+              <input
+                type="date"
+                class="form-control"
+                id="order_date"
+                formControlName="order_date"
+                readonly
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="shipping_date" class="form-label"
+                >Thời gian giao hàng</label
+              >
+              <input
+                type="date"
+                class="form-control"
+                id="shipping_date"
+                formControlName="shipping_date"
+                required
+              />
+            </div>
+            <div class="text-danger" *ngIf="editOrderForm.errors?.invalidShippingDate">
+              Ngày giao hàng không thể trước ngày đặt hàng.
+            </div>
+
+            <div class="mb-3">
+              <label for="payment_method" class="form-label"
+                >Phương thức thanh toán</label
+              >
+              <select
+                class="form-control"
+                id="payment_method"
+                formControlName="payment_method"
+                required
+              >
+                <option value="online">Online</option>
+                <option value="cod">COD</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="status" class="form-label">Trạng thái</label>
+              <select
+                class="form-control"
+                id="status"
+                formControlName="status"
+                required
+              >
+                <option value="pending">Đang chờ xử lý</option>
+                <option value="processing">Đang xử lý</option>
+                <option value="shipped">Đã giao hàng</option>
+                <option value="delivered">Đã giao thành công</option>
+                <option value="cancelled">Đã hủy</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="active" class="form-label">Trạng thái</label>
+              <select
+                class="form-control"
+                id="active"
+                formControlName="active"
+                required
+              >
+                <option value="true">Kích hoạt</option>
+                <option value="false">Không kích hoạt</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="note" class="form-label">Ghi chú</label>
+              <input
+                type="text"
+                class="form-control"
+                id="note"
+                formControlName="note"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="total_money" class="form-label">Tổng tiền</label>
+              <input
+                type="number"
+                class="form-control"
+                id="total_money"
+                formControlName="total_money"
+                required
+              />
+            </div>
+            <div
+              *ngIf="
+                editOrderForm.get('total_money')!.invalid &&
+                editOrderForm.get('total_money')!.touched
+              "
+              class="text-danger"
+            >
+              Tổng tiền phải là số dương và không được để trống
+            </div>
+
+            <h6><strong>Chi tiết sản phẩm</strong></h6>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Tên sản phẩm</th>
+                  <th>Hình ảnh</th>
+                  <th>Giá</th>
+                  <th>Số lượng</th>
+                  <th>Tổng tiền</th>
+                  <th>Màu sắc</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let detail of orderToEdit?.order_details">
+                  <td>{{ detail.id }}</td>
+                  <td>{{ detail.product_name }}</td>
+                  <td>
+                    <img
+                      [src]="detail.thumbnail"
+                      alt="{{ detail.product_name }}"
+                      width="50"
+                    />
+                  </td>
+                  <td>{{ detail.price | currency }}</td>
+                  <td>{{ detail.number_of_products }}</td>
+                  <td>
+                    {{
+                      detail.total_money
+                        ? (detail.total_money | currency)
+                        : "N/A"
+                    }}
+                  </td>
+                  <td>{{ detail.color ? detail.color : "N/A" }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item" *ngIf="currentPage > 0">
+        <a
+          class="page-link"
+          href="#"
+          aria-label="Previous"
+          (click)="onPageChange(0)"
+        >
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+      </li>
+      <ng-container *ngFor="let page of visiblePages">
+        <li class="page-item" [ngClass]="{ active: page === currentPage + 1 }">
+          <a class="page-link" (click)="onPageChange(page - 1)">{{ page }}</a>
+        </li>
+      </ng-container>
+      <li class="page-item" *ngIf="currentPage < totalPages - 1">
+        <a
+          class="page-link"
+          aria-label="Next"
+          (click)="onPageChange(totalPages - 1)"
+        >
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

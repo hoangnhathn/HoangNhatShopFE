@@ -1,0 +1,33 @@
+.product-item {
+  margin-bottom: 20px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-container {
+  width: 100%;
+  height: 300px; /* Chiều cao cố định */
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Giữ tỷ lệ hình ảnh, cắt bỏ phần thừa nếu cần */
+}
+.carousel-inner {
+  width: 100%;
+  height: 400px; /* Thay đổi chiều cao theo yêu cầu */
+  overflow: hidden; /* Đảm bảo hình ảnh không vượt quá phần tử chứa */
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Đảm bảo hình ảnh lấp đầy không gian mà không bị biến dạng */
+}
+

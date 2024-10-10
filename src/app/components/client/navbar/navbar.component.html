@@ -1,0 +1,123 @@
+<header>
+  <div class="px-3 py-2 text-bg-dark border-bottom">
+    <div class="container">
+      <div
+        class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
+      >
+        <a
+          href="/"
+          class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none"
+          ><img
+            src="./assets/logo.png"
+            alt="logo"
+            style="width: 100px; height: auto"
+          />
+        </a>
+
+        <ul
+          class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small"
+        >
+          <li>
+            <a class="nav-link text-white" href="/">
+              <div class="nav-link-icon"><i class="fa-solid fa-house"></i></div>
+              <span class="nav-link-text">Trang chủ</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link text-white" routerLink="/orders">
+              <div class="nav-link-icon">
+                <i class="fa-solid fa-cart-shopping"></i>
+              </div>
+              <span class="nav-link-text">Giỏ hàng</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-link text-white" routerLink="/orders">
+              <div class="nav-link-icon">
+                <i class="fa-solid fa-receipt"></i>
+              </div>
+              <span class="nav-link-text">Đơn hàng</span>
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle text-white"
+              id="navbarDropdownMenuLink"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              [routerLink]="['/products']"
+            >
+              <div class="nav-link-icon">
+                <i class="fa-solid fa-laptop"></i>
+              </div>
+              <span class="nav-link-text">Sản phẩm</span>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li>
+                <a
+                  class="dropdown-item"
+                  (click)="onCategorySelect(0)"
+                >
+                  Tất cả
+                </a>
+              </li>
+              <li *ngFor="let category of categories">
+                <a
+                  class="dropdown-item"
+                  (click)="onCategorySelect(category.id)"
+                >
+                  {{ category.name }}
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li *ngIf="userResponse">
+            <a class="nav-link text-white" [routerLink]="['/profile']">
+              <div class="nav-link-icon">
+                <i class="fa-solid fa-user"></i>
+              </div>
+              <span class="nav-link-text">{{userResponse.fullname}}</span>
+            </a>
+          </li>
+          <li *ngIf="!userResponse">
+            <a class="nav-link text-white" routerLink="/login">
+              <div class="nav-link-icon">
+                <i class="fa-solid fa-user"></i>
+              </div>
+              <span class="nav-link-text">Tài khoản</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="px-3 py-2 border-bottom mb-3">
+    <div class="container d-flex flex-wrap justify-content-center search-box">
+      <form
+        class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto d-flex"
+        role="search"
+      >
+        <input
+          type="search"
+          class="form-control"
+          aria-label="Search"
+          [(ngModel)]="keyword"
+          name="keyword"
+          (input)="onKeywordChange()"
+        />
+        <button type="submit" class="btn btn-primary ms-2">Tìm kiếm</button>
+      </form>
+
+      <div class="text-end" *ngIf="!userResponse">
+        <button type="button" class="btn btn-lg-font btn-light text-dark me-2" routerLink="/login">
+          Đăng nhập
+        </button>
+        <button type="button" class="btn btn-primary" routerLink="/register">Đăng ký</button>
+      </div>
+      <div class="text-end" *ngIf="userResponse">
+        <button type="button" class="btn btn-primary" (click)="logout()">Đăng xuất</button>
+      </div>
+    </div>
+  </div>
+</header>
